@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/", require("./src/router/test.js"));
 app.use("/Week", require('./src/router/week.js'));
 app.use("/Recipe", require('./src/router/recipe.js'));
-app.use("/Scrape", require("./src/router/scraper.js"));
+app.use("/Import", require("./src/router/scraper.js"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
