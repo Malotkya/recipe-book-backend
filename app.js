@@ -9,16 +9,10 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-let recipe = require('./src/recipe.js');;
-let week = require('./src/week.js')
-
-app.all("/", (req, res) => {
-    //forward to react client
-    res.end("Hello World!");
-});
-
-app.use("/Week", week);
-app.use("/Recipe", recipe);
+app.use("/", require("./src/router/test.js"));
+app.use("/Week", require('./src/router/week.js'));
+app.use("/Recipe", require('./src/router/recipe.js'));
+app.use("/Scrape", require("./src/router/scraper.js"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -27,12 +21,11 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-
   // render the error page
   res.status(err.status || 500);
   res.json({
       message: err.message,
-      error: req.app.get('env') === 'development' ? err : {}
+      error: err
   });
 });
 
