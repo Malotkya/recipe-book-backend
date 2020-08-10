@@ -1,0 +1,14 @@
+[Unit]
+Description=Backend Service for in house Recipe Book
+
+[Service]
+ExecStart=~/recipe-book-backend/bin/www
+Restart=always
+User=nobody
+Group=nogroup
+Environemnt=PATH=/user/bin:user/local/bin
+Environemnt=NODE_ENV=production
+WorkingDirectory=~/recipe-book-backend
+
+[Install]
+WantedBy=multi-user.target
