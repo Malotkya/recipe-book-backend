@@ -22,7 +22,7 @@ a local server.
     - If no id is provided it will create a new recipe using the information encoded
     in the body of the request.
 
-### Delete Request
+#### Delete Request
     - Deletes the recipe with the provided id
 
 
@@ -38,3 +38,8 @@ a local server.
 #### Post Request
     - Uses the date to select the week to update in the calendar and sets the week to
     represent the json data encoded in the request body.
+
+### /Import?target=url
+
+#### Get request
+    - will use an api to get the web url at target and add it to the database.
