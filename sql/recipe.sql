@@ -17,7 +17,7 @@ CREATE TABLE calendar (
 	date char(10),
     id INT,
     CONSTRAINT FOREIGN KEY(id) REFERENCES recipes(id),
-    CONSTRAINT PRIMARY KEY(date, recipe_id)
+    CONSTRAINT PRIMARY KEY(date, id)
 );
 
 INSERT INTO recipes(title, items, ingredients, directions, images)
@@ -72,16 +72,16 @@ VALUES("Testing");
 INSERT INTO recipes(title)
 VALUES("Recipe Name");
 
-INSERT INTO calendar(date, recipe_id)
+INSERT INTO calendar(date, id)
 VALUES('2020-08-09', 1);
 
-INSERT INTO calendar(date, recipe_id)
+INSERT INTO calendar(date, id)
 VALUES('2020-08-10', 1);
 
-INSERT INTO calendar(date, recipe_id)
+INSERT INTO calendar(date, id)
 VALUES('2020-08-13', 2);
 
-INSERT INTO calendar(date, recipe_id)
+INSERT INTO calendar(date, id)
 VALUES('2020-08-13', 3);
 
 SELECT * FROM recipes;
