@@ -30,7 +30,7 @@ dao.insert = (target, file) => {
     let src  = createPath("-1")   + "/" + file;
     let dest = createPath(target) + "/" + file;
 
-    fs.copyFileSync(temp, path);
+    fs.renameSync(src, dest);
 };
 
 dao.delete = (target, file) => {
