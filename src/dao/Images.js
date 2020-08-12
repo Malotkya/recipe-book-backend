@@ -27,14 +27,24 @@ dao.upload = (target, temp, type) => {
 };
 
 dao.insert = (target, file) => {
-    let src  = createPath("-1")   + "/" + fileName;
-    let dest = createPath(target) + "/" + fileName;
+    let src  = createPath("-1")   + "/" + file;
+    let dest = createPath(target) + "/" + file;
 
     fs.copyFileSync(temp, path);
 };
 
-dao.delete = file => {
+dao.delete = (target, file) => {
+    if(file === undefined) {
+        fs.rmdirSync(createPath(target), {recursive: true})
+    } else {
+        fs.unlinkSync(createPath(target) + "/" + file);
+    }
 
 };
+
+dao.getById = id => {
+    let path = createPath(id);
+    return fs.readdirSync(path);
+}
 
 module.exports = dao;
