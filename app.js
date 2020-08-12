@@ -9,8 +9,13 @@ let app = express();
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(fileUpload());
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/../images/tmp",
+    safeFileNames: true
+}));
 
+app.use( "/", express.static("./public") );
 app.use("/", require("./src/router/test.js"));
 app.use("/Week", require('./src/router/week.js'));
 app.use("/Recipe", require('./src/router/recipe.js'));
