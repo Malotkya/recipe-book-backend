@@ -1,17 +1,15 @@
 let express = require('express');
 let router = express.Router();
 
-let fs = require('fs');
+let dao = require("../dao/Images.js");
 
 router.post("/:id", (req,res)=>{
     try {
-        let id = req.params.id;
-        let path = process.cwd() + "/../images/" + id + "/" + req.files.image.name;
-        fs.writeFileSync(path, req.files.image.data);
+        let file = dao.upload(req.params.id, req.files.image.tempFilePath, req.files.image.mimetype);
 
         res.json({
-            id:id,
-            file:req.files.image.name
+            id:req.params.id,
+            file:file
         });
     } catch (e) {
         res.status(500).json({
