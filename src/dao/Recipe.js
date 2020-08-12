@@ -1,4 +1,5 @@
 const database = require("../util/database.js");
+let imageDao = require('./Images.js');
 
 let Recipe = database.model('Recipe', {
     tableName: 'recipes'
@@ -42,10 +43,36 @@ dao.getAll = async() => {
 
 dao.getById = async(id) => parse( (await new Recipe({id:id}).fetch()).attributes );
 
-dao.update = async(object) => parse( (await new Recipe(validate(object)).save()).attributes );
+dao.update = async(object) => {
+    let recipe = parse( (await new Recipe(validate(object)).save()).attributes );
 
-dao.insert = async(object) => parse( (await new Recipe(validate(object)).save(null, {method:"insert"})).attributes );
+    let current = imageDao.getById(recipe.id);
+    for(let i=0; i<recipe.images.length; i++) {
+        let index = current.indexOf(recipe.images[i]);
+        if(index >= 0) {
+            current.splice(index, 1);
+        } else {
+            console.error("image in object but not in files");
+        }
+    }
 
-dao.delete = async(id) => await new Recipe({id:id}).destroy();
+    current.forEach(file => imageDao.delete(recipe.id, file));
+    return recipe;
+}
+
+dao.insert = async(object) => {
+    let recipe = parse( (await new Recipe(validate(object)).save(null, {method:"insert"})).attributes );
+
+    recipe.images.forEach(file => {
+        imageDao.insert(recipe.id, file);
+    });
+
+    return recipe;
+}
+
+dao.delete = async(id) => {
+    imageDao.delete(id);
+    await new Recipe({id:id}).destroy();
+}
 
 module.exports = dao;
